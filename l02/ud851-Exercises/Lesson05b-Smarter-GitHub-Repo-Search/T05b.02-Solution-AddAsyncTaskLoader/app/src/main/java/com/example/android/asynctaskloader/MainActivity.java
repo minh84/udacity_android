@@ -21,6 +21,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -209,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements
                 // COMPLETED (10) Get the String for our URL from the bundle passed to onCreateLoader
                 /* Extract the search query from the args using our constant */
                 String searchQueryUrlString = args.getString(SEARCH_QUERY_URL_EXTRA);
-
+                Log.v("Test", "Call loadInBackground");
                 // COMPLETED (11) If the URL is null or empty, return null
                 /* If the user didn't enter anything, there's nothing to search for */
                 if (searchQueryUrlString == null || TextUtils.isEmpty(searchQueryUrlString)) {

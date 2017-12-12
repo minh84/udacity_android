@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements
          * created and (if the activity/fragment is currently started) starts the loader. Otherwise
          * the last created loader is re-used.
          */
+        Log.v("Test", "Call onCreate");
         getSupportLoaderManager().initLoader(loaderId, bundleForLoader, callback);
     }
 
@@ -158,8 +159,10 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             protected void onStartLoading() {
                 if (mWeatherData != null) {
+                    Log.v("Test", "Call onStartLoading mWeatherData not empty");
                     deliverResult(mWeatherData);
                 } else {
+                    Log.v("Test", "Call onStartLoading mWeatherData empty");
                     mLoadingIndicator.setVisibility(View.VISIBLE);
                     forceLoad();
                 }
@@ -178,6 +181,7 @@ public class MainActivity extends AppCompatActivity implements
                 String locationQuery = SunshinePreferences
                         .getPreferredWeatherLocation(MainActivity.this);
 
+                Log.v("Test", "Call loadInBackground");
                 URL weatherRequestUrl = NetworkUtils.buildUrl(locationQuery);
 
                 try {
@@ -298,6 +302,18 @@ public class MainActivity extends AppCompatActivity implements
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
         /* Then, make sure the weather data is visible */
         mRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.v("Test", "Call onPause");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.v("Test", "Call onDestroy");
     }
 
     /**

@@ -21,6 +21,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -166,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements
         return new AsyncTaskLoader<String>(this) {
 
             // TODO (1) Create a String member variable called mGithubJson that will store the raw JSON
+            private String mGithubJson;
 
             @Override
             protected void onStartLoading() {
@@ -179,9 +181,15 @@ public class MainActivity extends AppCompatActivity implements
                  * When we initially begin loading in the background, we want to display the
                  * loading indicator to the user
                  */
-                mLoadingIndicator.setVisibility(View.VISIBLE);
+
 
                 // TODO (2) If mGithubJson is not null, deliver that result. Otherwise, force a load
+                if (mGithubJson != null) {
+                    deliverResult(mGithubJson);
+                    return;
+                }
+
+                mLoadingIndicator.setVisibility(View.VISIBLE);
                 forceLoad();
             }
 
@@ -196,6 +204,8 @@ public class MainActivity extends AppCompatActivity implements
                     return null;
                 }
 
+                Log.v("Test", "Call loadInBackground");
+
                 /* Parse the URL from the passed in String and perform the search */
                 try {
                     URL githubUrl = new URL(searchQueryUrlString);
@@ -209,6 +219,12 @@ public class MainActivity extends AppCompatActivity implements
 
             // TODO (3) Override deliverResult and store the data in mGithubJson
             // TODO (4) Call super.deliverResult after storing the data
+
+            @Override
+            public void deliverResult(String data) {
+                mGithubJson = data;
+                super.deliverResult(data);
+            }
         };
     }
 

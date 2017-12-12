@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements
                  * When we initially begin loading in the background, we want to display the
                  * loading indicator to the user
                  */
-                mLoadingIndicator.setVisibility(View.VISIBLE);
+
 
                 // COMPLETED (2) If mGithubJson is not null, deliver that result. Otherwise, force a load
                 /*
@@ -191,6 +191,7 @@ public class MainActivity extends AppCompatActivity implements
                 if (mGithubJson != null) {
                     deliverResult(mGithubJson);
                 } else {
+                    mLoadingIndicator.setVisibility(View.VISIBLE);
                     forceLoad();
                 }
             }
