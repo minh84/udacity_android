@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -49,11 +50,26 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickOpenAddressButton(View v) {
         // TODO (5) Store an address in a String
+        String googleHq = "1600 Amphitheatre Parkway, Mountain+View, California";
 
         // TODO (6) Use Uri.Builder with the appropriate scheme and query to form the Uri for the address
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("geo")
+                .path("0,0")
+                .appendQueryParameter("q", googleHq);
+        // the example in Udacity is wrong
+        // when using .query it only add the query after ?
+        // for example uri will be geo:/0%2C0?1600%20Amphitheatre%20Parkway%2C%20Mountain%2BView%2C%20California
+        // however we need to have
+        //          geo:/0%2C0?q=1600%20Amphitheatre%20Parkway%2C%20Mountain%2BView%2C%20California
+        // the solution is to use appendQueryParameter
+
+        Uri uri = builder.build();
+//        Uri uri = Uri.parse("geo:0,0?q=1600 Amphitheatre Parkway, Mountain View, California");
+        Log.v("mapIntent", "uri = " + uri.toString());
 
         // TODO (7) Replace the Toast with a call to showMap, passing in the Uri from the previous step
-        Toast.makeText(this, "TODO: Open a map when this button is clicked", Toast.LENGTH_SHORT).show();
+        showMap(uri);
     }
 
     /**
@@ -114,11 +130,17 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO (1) Create a method called showMap with a Uri as the single parameter
     // Do steps 2 - 4 within the showMap method
+    private void showMap(Uri uri) {
         // TODO (2) Create an Intent with action type, Intent.ACTION_VIEW
+        Intent intent = new Intent(Intent.ACTION_VIEW);
 
         // TODO (3) Set the data of the Intent to the Uri passed into this method
+        intent.setData(uri);
 
         // TODO (4) Verify that this Intent can be launched and then call startActivity
-
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
 
 }
