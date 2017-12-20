@@ -109,7 +109,9 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        // TODO (3) Within onUpgrade, drop the weather table if it exists
-        // TODO (4) call onCreate and pass in the SQLiteDatabase (passed in to onUpgrade)
+        // DONE (3) Within onUpgrade, drop the weather table if it exists
+        // DONE (4) call onCreate and pass in the SQLiteDatabase (passed in to onUpgrade)
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + WeatherEntry.TABLE_NAME);
+        onCreate(sqLiteDatabase);
     }
 }
