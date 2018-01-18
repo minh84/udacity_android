@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.app.NotificationCompat;
 
 import com.example.android.sunshine.R;
 import com.example.android.sunshine.data.WeatherContract;
@@ -32,7 +34,8 @@ public class NotificationUtils {
     public static final int INDEX_MAX_TEMP = 1;
     public static final int INDEX_MIN_TEMP = 2;
 
-//  TODO (1) Create a constant int value to identify the notification
+//  Done (1) Create a constant int value to identify the notification
+    private static final int WEATHER_NOTIFICATION_ID = 3004;
 
     /**
      * Constructs and displays a notification for the newly updated weather for today.
@@ -84,8 +87,17 @@ public class NotificationUtils {
                     .getSmallArtResourceIdForWeatherCondition(weatherId);
 
 //          TODO (2) Use NotificationCompat.Builder to begin building the notification
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
+                    .setColor(ContextCompat.getColor(context,R.color.colorPrimary))
+                    .setSmallIcon(smallArtResourceId)
+                    .setLargeIcon(largeIcon)
+                    .setContentTitle(notificationTitle)
+                    .setContentText(notificationText)
+                    .setAutoCancel(true);
+
 
 //          TODO (3) Create an Intent with the proper URI to start the DetailActivity
+
 
 //          TODO (4) Use TaskStackBuilder to create the proper PendingIntent
 
